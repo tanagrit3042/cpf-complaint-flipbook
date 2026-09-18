@@ -10,6 +10,7 @@
   --forest-deep: #043e2f;
   --mint: #6fddb3;
   --cream: #fffaf0;
+  --background-image: url("./assets/background-landscape.png?v=20260918-4");
 }
 
 * {
@@ -26,36 +27,13 @@ body {
 body {
   min-height: 100dvh;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 12% 12%, rgba(111, 221, 179, 0.3), transparent 33rem),
-    radial-gradient(circle at 88% 88%, rgba(237, 186, 96, 0.2), transparent 31rem),
-    linear-gradient(138deg, #eef7f1 0%, #dcebe3 48%, #f4ebdc 100%);
-}
-
-body::before,
-body::after {
-  position: fixed;
-  z-index: -1;
-  border-radius: 50%;
-  content: "";
-  pointer-events: none;
-}
-
-body::before {
-  width: 28rem;
-  height: 28rem;
-  top: -13rem;
-  right: -8rem;
-  border: 1px solid rgba(7, 92, 67, 0.12);
-  box-shadow: 0 0 0 4rem rgba(255, 255, 255, 0.12), 0 0 0 8rem rgba(7, 92, 67, 0.025);
-}
-
-body::after {
-  width: 18rem;
-  height: 18rem;
-  bottom: -10rem;
-  left: -5rem;
-  background: rgba(255, 250, 240, 0.46);
+  background-color: #e5f3e7;
+  background-image:
+    linear-gradient(rgba(245, 252, 247, 0.18), rgba(242, 249, 239, 0.12)),
+    var(--background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 button {
@@ -75,9 +53,13 @@ button {
 }
 
 .reader:fullscreen {
-  background:
-    radial-gradient(circle at 15% 15%, rgba(111, 221, 179, 0.28), transparent 32rem),
-    linear-gradient(138deg, #eef7f1, #dcebe3 55%, #f4ebdc);
+  background-color: #e5f3e7;
+  background-image:
+    linear-gradient(rgba(245, 252, 247, 0.18), rgba(242, 249, 239, 0.12)),
+    var(--background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .book-stage {
@@ -90,13 +72,17 @@ button {
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.66);
   border-radius: 28px;
-  background:
-    linear-gradient(115deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.16)),
-    repeating-linear-gradient(0deg, transparent 0 34px, rgba(7, 92, 67, 0.018) 35px);
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.07));
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.82) inset,
     0 24px 70px rgba(26, 75, 57, 0.14);
   perspective: 2400px;
+}
+
+@media (orientation: portrait) {
+  :root {
+    --background-image: url("./assets/background-portrait.png?v=20260918-4");
+  }
 }
 
 .book-stage::after {
