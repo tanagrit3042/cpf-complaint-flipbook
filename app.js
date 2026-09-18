@@ -1,7 +1,9 @@
 const PAGE_COUNT = 13;
+const ASSET_VERSION = "20260918-3";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
-  (_, index) => `./pages/page-${String(index + 1).padStart(2, "0")}.jpg`,
+  (_, index) =>
+    `./pages/page-${String(index + 1).padStart(2, "0")}.jpg?v=${ASSET_VERSION}`,
 );
 
 const bookElement = document.querySelector("#book");
