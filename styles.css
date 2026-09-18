@@ -1,6 +1,9 @@
 :root {
   color-scheme: light;
-  font-family: "Noto Sans Thai", "Leelawadee UI", Tahoma, sans-serif;
+  font-family: "Noto Sans Thai", "Leelawadee UI", system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   color: #12372b;
   background: #e8f1eb;
   --forest: #075c43;
@@ -57,6 +60,7 @@ body::after {
 
 button {
   font: inherit;
+  letter-spacing: 0;
 }
 
 .reader {
@@ -217,6 +221,8 @@ button {
 .nav-button {
   gap: 6px;
   padding: 0 16px;
+  font-weight: 600;
+  line-height: 1.35;
 }
 
 .icon-button {
@@ -257,11 +263,16 @@ button {
 .page-status {
   min-width: 106px;
   min-height: 43px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0 14px;
   border-radius: 999px;
   background: var(--mint);
   color: #073b2d;
-  font-weight: 800;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
   box-shadow: 0 4px 13px rgba(0, 0, 0, 0.14), 0 1px 0 rgba(255, 255, 255, 0.46) inset;
   transition: background-color 160ms ease, transform 160ms ease;
@@ -277,9 +288,10 @@ button {
 }
 
 .page-label {
-  margin-right: 6px;
-  font-size: 12px;
+  margin-right: 7px;
+  font-size: 13px;
   font-weight: 600;
+  line-height: 1.2;
   opacity: 0.72;
 }
 
