@@ -13,6 +13,9 @@ const currentPageElement = document.querySelector("#current-page");
 const totalPagesElement = document.querySelector("#total-pages");
 const pageDialog = document.querySelector("#page-dialog");
 const pageGrid = document.querySelector("#page-grid");
+const controlsElement = document.querySelector("#controls");
+const readerElement = document.querySelector(".reader");
+const fullscreenButton = document.querySelector("#fullscreen-button");
 
 const hashPage = Number.parseInt(window.location.hash.replace("#page-", ""), 10);
 const initialPage = Number.isFinite(hashPage)
@@ -44,6 +47,7 @@ function updateControls(pageIndex) {
   totalPagesElement.textContent = String(PAGE_COUNT);
   previousButton.disabled = pageIndex <= 0;
   nextButton.disabled = pageIndex >= PAGE_COUNT - 1;
+  controlsElement.style.setProperty("--progress", String(pageNumber / PAGE_COUNT));
 
   pageGrid.querySelectorAll(".page-choice").forEach((button, index) => {
     if (index === pageIndex) {
@@ -63,8 +67,17 @@ function buildPagePicker() {
     const button = document.createElement("button");
     button.className = "page-choice";
     button.type = "button";
-    button.textContent = String(index + 1);
     button.setAttribute("aria-label", `ไปหน้า ${index + 1}`);
+
+    const thumbnail = document.createElement("img");
+    thumbnail.src = PAGE_PATHS[index];
+    thumbnail.alt = "";
+    thumbnail.loading = "lazy";
+
+    const label = document.createElement("span");
+    label.textContent = `หน้า ${index + 1}`;
+
+    button.append(thumbnail, label);
     button.addEventListener("click", () => {
       pageFlip.flip(index, "top");
       pageDialog.close();
@@ -90,7 +103,27 @@ nextButton.addEventListener("click", () => pageFlip.flipNext("top"));
 pageStatus.addEventListener("click", () => {
   if (typeof pageDialog.showModal === "function") {
     pageDialog.showModal();
+    const activePage = pageGrid.querySelector('[aria-current="page"]');
+    activePage?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }
+});
+
+fullscreenButton.addEventListener("click", async () => {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await readerElement.requestFullscreen();
+    }
+  } catch {
+    fullscreenButton.hidden = true;
+  }
+});
+
+document.addEventListener("fullscreenchange", () => {
+  const isFullscreen = Boolean(document.fullscreenElement);
+  fullscreenButton.classList.toggle("is-active", isFullscreen);
+  fullscreenButton.setAttribute("aria-label", isFullscreen ? "ออกจากเต็มจอ" : "เปิดเต็มจอ");
 });
 
 pageDialog.addEventListener("click", (event) => {
