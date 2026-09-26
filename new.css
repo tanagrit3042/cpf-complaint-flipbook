@@ -199,6 +199,66 @@
   aspect-ratio: 16 / 9;
 }
 
+@media (min-width: 900px) and (min-height: 651px) {
+  .reader--wide {
+    width: 100%;
+    height: 100dvh;
+    min-height: 0;
+    grid-template-columns: clamp(250px, 20vw, 330px) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+    column-gap: clamp(20px, 3vw, 48px);
+    row-gap: 12px;
+    padding: 20px clamp(24px, 4vw, 72px);
+  }
+
+  .reader--wide .reader-heading {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    justify-self: end;
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .reader--wide .reader-heading h1 {
+    font-size: clamp(40px, 3.2vw, 58px);
+    line-height: 0.92;
+  }
+
+  .reader--wide .reader-heading__eyebrow {
+    font-size: 14px;
+  }
+
+  .reader--wide .reader-heading__subtitle {
+    font-size: 15px;
+  }
+
+  .reader--wide .slide-stage {
+    grid-column: 2;
+    grid-row: 1;
+    padding: 0;
+  }
+
+  .reader--wide .slide-shell {
+    width: min(100%, calc((100dvh - 125px) * 16 / 9));
+  }
+
+  .reader--wide .controls {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .reader--wide .reader-footnote {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    width: 100%;
+    max-width: 320px;
+    flex-direction: column;
+    gap: 6px;
+  }
+}
+
 @media (max-width: 650px) {
   .reader--wide {
     gap: 12px;
