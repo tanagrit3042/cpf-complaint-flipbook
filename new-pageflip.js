@@ -151,13 +151,20 @@ async function enterLandscapeFullscreen() {
 }
 
 fullscreenButton.addEventListener("click", async () => {
-  if (document.fullscreenElement) {
-    await document.exitFullscreen();
-  } else {
-    await enterLandscapeFullscreen();
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+    } else {
+      await reader.requestFullscreen();
+    }
+  } catch {
+    // Fullscreen is unavailable on some mobile browsers.
   }
 });
-landscapeButton.addEventListener("click", enterLandscapeFullscreen);
+landscapeButton.addEventListener("click", () => {
+  landscapeButton.hidden = true;
+  void enterLandscapeFullscreen();
+});
 document.addEventListener("fullscreenchange", () => {
   const isFullscreen = Boolean(document.fullscreenElement);
   fullscreenButton.setAttribute(
@@ -169,11 +176,6 @@ document.addEventListener("fullscreenchange", () => {
 window.matchMedia("(orientation: landscape)").addEventListener("change", (event) => {
   if (event.matches) landscapeHelp.hidden = true;
 });
-if (window.matchMedia("(max-width: 760px) and (orientation: portrait)").matches && screen.orientation?.lock) {
-  screen.orientation.lock("landscape").catch(() => {
-    // Regular browser tabs require a user gesture; the button handles that case.
-  });
-}
 document.addEventListener("keydown", (event) => {
   if (pageDialog.open || !pageFlip) return;
   if (["ArrowRight", "PageDown", " "].includes(event.key)) {

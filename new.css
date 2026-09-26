@@ -2,6 +2,22 @@
   grid-template-rows: auto minmax(0, 1fr) auto auto;
 }
 
+.reader-title {
+  max-width: min(96vw, 740px);
+  margin: 0;
+  padding: 10px 22px;
+  border: 1px solid rgba(7, 92, 67, 0.18);
+  border-radius: 18px;
+  color: #074b38;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 28px rgba(4, 62, 47, 0.11);
+  font-size: clamp(16px, 2vw, 21px);
+  font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
+  text-wrap: balance;
+}
+
 .slide-stage {
   width: 100%;
   height: 100%;
@@ -33,6 +49,49 @@
   touch-action: pan-y pinch-zoom;
 }
 
+.slide-launch {
+  display: none;
+}
+
+.reader--wide .controls {
+  border-color: rgba(7, 92, 67, 0.22);
+  color: #07513d;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 12px 34px rgba(4, 62, 47, 0.17);
+}
+
+.reader--wide .controls::before {
+  background: rgba(7, 92, 67, 0.12);
+}
+
+.reader--wide .controls::after {
+  background: #18a574;
+}
+
+.reader--wide .page-status {
+  color: #fff;
+  background: #086348;
+  box-shadow: 0 3px 11px rgba(4, 62, 47, 0.2);
+}
+
+.reader--wide .page-status:hover,
+.reader--wide .page-status:focus-visible {
+  background: #0a7857;
+}
+
+.reader--wide .control-divider {
+  background: rgba(7, 92, 67, 0.16);
+}
+
+.reader--wide .nav-button:hover:not(:disabled),
+.reader--wide .nav-button:focus-visible,
+.reader--wide .icon-button:hover,
+.reader--wide .icon-button:focus-visible,
+.reader--wide .icon-button.is-active {
+  color: #07513d;
+  background: rgba(7, 92, 67, 0.11);
+}
+
 .reader-footnote {
   width: min(96vw, 1500px);
   display: flex;
@@ -46,7 +105,6 @@
 }
 
 .fullscreen-label,
-.landscape-button,
 .landscape-help {
   display: none;
 }
@@ -57,10 +115,10 @@
   align-items: center;
   gap: 4px;
   padding: 3px 10px;
-  border: 1px solid rgba(7, 92, 67, 0.15);
+  border: 1px solid rgba(7, 92, 67, 0.22);
   border-radius: 999px;
   color: #075c43;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.88);
   font-size: 12px;
   font-weight: 700;
   text-decoration: none;
@@ -105,32 +163,72 @@
 }
 
 @media (orientation: portrait) and (max-width: 760px) {
-  .landscape-button {
-    min-height: 44px;
-    display: inline-flex;
+  .reader-title {
+    max-width: 96vw;
+    padding: 10px 16px;
+    font-size: 17px;
+  }
+
+  .slide-launch:not([hidden]) {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    padding: 7px 18px;
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 999px;
-    color: #fff;
-    background: #075c43;
-    box-shadow: 0 8px 24px rgba(4, 62, 47, 0.22);
+    padding: 14px;
+    border: 0;
+    color: #07513d;
+    background: rgba(248, 253, 250, 0.76);
+    backdrop-filter: blur(5px);
     font: inherit;
-    font-size: 13px;
-    font-weight: 700;
+    text-align: center;
     cursor: pointer;
   }
 
-  .landscape-button svg {
-    width: 20px;
-    height: 20px;
+  .slide-launch-content {
+    width: min(100%, 305px);
+    display: grid;
+    justify-items: center;
+    gap: 4px;
+    padding: 15px 12px;
+    border: 1px solid rgba(7, 92, 67, 0.18);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(4, 62, 47, 0.18);
+  }
+
+  .slide-launch-icon {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 11px;
+    color: #07513d;
+    background: #dff5ea;
+  }
+
+  .slide-launch svg {
+    width: 22px;
+    height: 22px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2;
     stroke-linecap: round;
     stroke-linejoin: round;
+  }
+
+  .slide-launch strong {
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .slide-launch small {
+    color: #496e5d;
+    font-size: 11px;
+    line-height: 1.35;
   }
 
   .landscape-help:not([hidden]) {
@@ -155,20 +253,15 @@
       max(6px, env(safe-area-inset-bottom)) max(8px, env(safe-area-inset-left));
   }
 
-  .reader--wide .book-tabs {
+  .reader--wide .reader-title {
     grid-column: 2;
     grid-row: 1;
     justify-self: stretch;
-    flex-direction: column;
-    gap: 6px;
+    max-width: none;
+    padding: 9px 8px;
+    font-size: 14px;
+    line-height: 1.28;
     z-index: 2;
-  }
-
-  .reader--wide .book-tab {
-    width: 100%;
-    min-height: 38px;
-    padding: 4px 8px;
-    font-size: 13px;
   }
 
   .slide-stage {
@@ -212,7 +305,7 @@
     justify-content: center;
     padding: 0;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(7, 92, 67, 0.08);
   }
 
   .reader--wide .nav-button span {
@@ -246,7 +339,7 @@
     justify-content: center;
     gap: 8px;
     border-radius: 12px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(7, 92, 67, 0.08);
     font-size: 12px;
     font-weight: 700;
   }
@@ -278,8 +371,8 @@
 }
 
 @media (orientation: landscape) and (max-height: 360px) {
-  .reader--wide .book-tab {
-    min-height: 33px;
+  .reader--wide .reader-title {
+    padding: 6px 8px;
     font-size: 12px;
   }
 

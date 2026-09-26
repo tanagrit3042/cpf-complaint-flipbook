@@ -14,6 +14,7 @@ From this repository directory, run `npm run dev` and open
 `http://localhost:5173/new.html` for the landscape reader.
 The development server uses Python's built-in HTTP server, so no `npm install` is needed.
 
-On a phone, the new document is designed for landscape viewing. The portrait
-view has an **Open landscape fullscreen** button; browsers that support screen
-orientation locking will rotate after the button is tapped.
+The original reader in `index.html` still uses every image in `pages/`, while
+`new.html` uses `new-pages/`. On a phone held upright, the new reader places a
+white **Click to read fullscreen** prompt over the slide. Tapping it requests
+fullscreen and landscape orientation where the browser supports it.
