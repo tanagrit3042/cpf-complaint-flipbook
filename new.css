@@ -377,3 +377,152 @@
     display: none;
   }
 }
+
+html.has-virtual-landscape {
+  overflow: hidden;
+  background: #e5f3e7;
+}
+
+.reader--wide.is-virtual-landscape {
+  position: fixed;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  width: 100dvh;
+  height: 100dvw;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) clamp(132px, 18dvh, 156px);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: 8px;
+  padding: 6px 8px;
+  overflow: hidden;
+  background-color: #e5f3e7;
+  background-image:
+    linear-gradient(rgba(245, 252, 247, 0.18), rgba(242, 249, 239, 0.12)),
+    var(--background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  transform: translate(-50%, -50%) rotate(90deg);
+  transform-origin: center;
+}
+
+.reader--wide.is-virtual-landscape .reader-title {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: stretch;
+  max-width: none;
+  padding: 9px 8px;
+  font-size: 14px;
+  line-height: 1.28;
+  z-index: 2;
+}
+
+.reader--wide.is-virtual-landscape .slide-stage {
+  grid-column: 1;
+  grid-row: 1 / 4;
+  padding: 0;
+}
+
+.reader--wide.is-virtual-landscape .slide-shell {
+  width: min(100%, calc((100dvw - 12px) * 16 / 9));
+  border-radius: 12px;
+}
+
+.reader--wide.is-virtual-landscape .slide-launch {
+  display: none;
+}
+
+.reader--wide.is-virtual-landscape .controls {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  justify-self: stretch;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto auto;
+  width: 100%;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 20px;
+  z-index: 1;
+}
+
+.reader--wide.is-virtual-landscape .page-status {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 43px;
+  font-size: 16px;
+}
+
+.reader--wide.is-virtual-landscape .nav-button {
+  min-height: 44px;
+  width: 100%;
+  justify-content: center;
+  padding: 0;
+  border-radius: 12px;
+  background: rgba(7, 92, 67, 0.08);
+}
+
+.reader--wide.is-virtual-landscape .nav-button span {
+  display: none;
+}
+
+.reader--wide.is-virtual-landscape .nav-button svg {
+  width: 24px;
+  height: 24px;
+}
+
+.reader--wide.is-virtual-landscape #prev-button {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.reader--wide.is-virtual-landscape #next-button {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.reader--wide.is-virtual-landscape .control-divider {
+  display: none;
+}
+
+.reader--wide.is-virtual-landscape #fullscreen-button {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  width: 100%;
+  min-height: 38px;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: rgba(7, 92, 67, 0.08);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reader--wide.is-virtual-landscape .fullscreen-label {
+  display: inline;
+}
+
+.reader--wide.is-virtual-landscape .reader-footnote {
+  grid-column: 2;
+  grid-row: 3;
+  justify-self: stretch;
+  width: 100%;
+  gap: 0;
+  z-index: 1;
+}
+
+.reader--wide.is-virtual-landscape .reader-footnote .reading-hints {
+  display: none;
+}
+
+.reader--wide.is-virtual-landscape .pdf-link {
+  width: 100%;
+  min-height: 37px;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
+}

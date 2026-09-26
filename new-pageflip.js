@@ -20,6 +20,8 @@ const landscapeButton = document.querySelector("#landscape-button");
 const landscapeHelp = document.querySelector("#landscape-help");
 const controls = document.querySelector("#controls");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const landscapeMedia = window.matchMedia("(orientation: landscape)");
+let virtualLandscape = false;
 
 function pageFromHash() {
   const match = window.location.hash.match(/^#page-(\d+)$/);
@@ -130,6 +132,27 @@ pageDialog.addEventListener("click", (event) => {
   if (event.target === pageDialog) pageDialog.close();
 });
 
+function updateFullscreenButton() {
+  const isFullscreen = Boolean(document.fullscreenElement);
+  const isReadingLandscape = isFullscreen || virtualLandscape;
+  fullscreenButton.setAttribute(
+    "aria-label",
+    isReadingLandscape ? "ออกจากการอ่านแนวนอน" : "เปิดเต็มจอ",
+  );
+  fullscreenButton.querySelector(".fullscreen-label").textContent = isReadingLandscape
+    ? "ออกจากแนวนอน"
+    : "เต็มจอ";
+}
+
+function setVirtualLandscape(enabled) {
+  virtualLandscape = enabled;
+  reader.classList.toggle("is-virtual-landscape", enabled);
+  document.documentElement.classList.toggle("has-virtual-landscape", enabled);
+  landscapeButton.hidden = enabled;
+  landscapeHelp.hidden = true;
+  updateFullscreenButton();
+}
+
 async function enterLandscapeFullscreen() {
   let orientationLocked = false;
   try {
@@ -147,10 +170,26 @@ async function enterLandscapeFullscreen() {
       // Orientation locking requires fullscreen and browser support.
     }
   }
-  landscapeHelp.hidden = orientationLocked || window.matchMedia("(orientation: landscape)").matches;
+  if (!orientationLocked && !landscapeMedia.matches) {
+    setVirtualLandscape(true);
+  } else {
+    landscapeHelp.hidden = true;
+  }
 }
 
 fullscreenButton.addEventListener("click", async () => {
+  if (virtualLandscape) {
+    setVirtualLandscape(false);
+    landscapeButton.hidden = false;
+    if (document.fullscreenElement) {
+      try {
+        await document.exitFullscreen();
+      } catch {
+        // The browser controls how native fullscreen is closed.
+      }
+    }
+    return;
+  }
   try {
     if (document.fullscreenElement) {
       await document.exitFullscreen();
@@ -166,15 +205,13 @@ landscapeButton.addEventListener("click", () => {
   void enterLandscapeFullscreen();
 });
 document.addEventListener("fullscreenchange", () => {
-  const isFullscreen = Boolean(document.fullscreenElement);
-  fullscreenButton.setAttribute(
-    "aria-label",
-    isFullscreen ? "ออกจากเต็มจอ" : "เปิดเต็มจอ",
-  );
-  fullscreenButton.querySelector(".fullscreen-label").textContent = isFullscreen ? "ออกเต็มจอ" : "เต็มจอ";
+  updateFullscreenButton();
 });
-window.matchMedia("(orientation: landscape)").addEventListener("change", (event) => {
-  if (event.matches) landscapeHelp.hidden = true;
+landscapeMedia.addEventListener("change", (event) => {
+  if (event.matches) {
+    if (virtualLandscape) setVirtualLandscape(false);
+    landscapeHelp.hidden = true;
+  }
 });
 document.addEventListener("keydown", (event) => {
   if (pageDialog.open || !pageFlip) return;
