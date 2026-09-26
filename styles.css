@@ -55,40 +55,46 @@ button {
 .book-tabs {
   display: flex;
   align-items: center;
-  gap: 3px;
-  padding: 4px;
-  border: 1px solid rgba(255, 255, 255, 0.75);
-  border-radius: 999px;
-  background: rgba(248, 253, 249, 0.76);
-  box-shadow: 0 8px 28px rgba(25, 73, 53, 0.09);
-  backdrop-filter: blur(16px);
+  gap: 10px;
 }
 
 .book-tab {
-  min-height: 35px;
+  min-height: 43px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 0 16px;
+  padding: 0 19px;
+  border: 1px solid rgba(255, 255, 255, 0.82);
   border-radius: 999px;
   color: #245642;
+  background: rgba(248, 253, 249, 0.82);
+  box-shadow: 0 8px 24px rgba(25, 73, 53, 0.12);
+  backdrop-filter: blur(14px);
   font-size: 13px;
   font-weight: 700;
   text-decoration: none;
-  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: background-color 200ms ease, color 200ms ease, transform 200ms ease, box-shadow 200ms ease;
 }
 
 .book-tab:hover,
 .book-tab:focus-visible {
-  background: rgba(7, 92, 67, 0.1);
+  background: #f4fff8;
   color: #064d38;
+  transform: translateY(-2px);
+  box-shadow: 0 11px 26px rgba(25, 73, 53, 0.16);
 }
 
 .book-tab[aria-current="page"] {
   background: #075c43;
   color: #f6fff9;
-  box-shadow: 0 3px 10px rgba(4, 62, 47, 0.18);
+  border-color: rgba(255, 255, 255, 0.64);
+  box-shadow: 0 8px 24px rgba(4, 62, 47, 0.23);
+}
+
+.book-tab[aria-current="page"]:hover,
+.book-tab[aria-current="page"]:focus-visible {
+  background: #086c4f;
 }
 
 .reader:fullscreen {
@@ -332,9 +338,17 @@ button {
   background: rgba(255, 255, 255, 0.17);
 }
 
-.hint {
-  min-height: 24px;
+.reading-hints {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.hint-chip {
+  min-height: 24px;
+  display: inline-flex;
   align-items: center;
   gap: 7px;
   margin: 0;
@@ -347,7 +361,7 @@ button {
   text-align: center;
 }
 
-.hint span {
+.hint-chip .hint-symbol {
   color: var(--forest);
   font-size: 16px;
 }
@@ -483,7 +497,7 @@ button {
     padding: 0 12px;
   }
 
-  .hint {
+  .hint-chip {
     font-size: 11px;
   }
 }

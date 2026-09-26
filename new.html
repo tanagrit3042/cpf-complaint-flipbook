@@ -16,8 +16,8 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260926-1" />
-    <link rel="stylesheet" href="./new.css?v=20260926-1" />
+    <link rel="stylesheet" href="./styles.css?v=20260926-2" />
+    <link rel="stylesheet" href="./new.css?v=20260926-2" />
   </head>
   <body>
     <main class="reader reader--wide" id="reader" aria-label="เอกสารการจัดการข้อร้องเรียนอย่างง่าย ฉบับใหม่">
@@ -67,7 +67,10 @@
       </nav>
 
       <div class="reader-footnote">
-        <span class="hint">← → เปลี่ยนหน้า · ปัดหน้าจอเพื่อเปิดหน้า</span>
+        <div class="reading-hints" aria-label="วิธีเปลี่ยนหน้า">
+          <span class="hint-chip"><span class="hint-symbol" aria-hidden="true">← →</span> เปลี่ยนหน้า</span>
+          <span class="hint-chip">ปัดหน้าจอเพื่อเปิดหน้า</span>
+        </div>
         <a class="pdf-link" href="./doc/การจัดการข้อร้องเรียนอย่างง่าย_230969.pdf" target="_blank" rel="noopener">
           เปิดไฟล์ PDF ต้นฉบับ <span aria-hidden="true">↗</span>
         </a>
@@ -84,6 +87,6 @@
       </form>
     </dialog>
 
-    <script src="./new-reader.js?v=20260926-1"></script>
+    <script src="./new-reader.js?v=20260926-2"></script>
   </body>
 </html>
