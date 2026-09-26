@@ -1,5 +1,5 @@
 const PAGE_COUNT = 13;
-const PAGE_VERSION = "20260926-4";
+const PAGE_VERSION = "20260926-11";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
   (_, index) => `./new-pages/page-${String(index + 1).padStart(2, "0")}.jpg?v=${PAGE_VERSION}`,

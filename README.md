@@ -14,7 +14,17 @@ From this repository directory, run `npm run dev` and open
 `http://localhost:5173/new.html` for the landscape reader.
 The development server uses Python's built-in HTTP server, so no `npm install` is needed.
 
+Use one cache version for every HTML, CSS, JavaScript, background, and page-image
+asset. When preparing a new deployment, update all references with one command:
+
+```powershell
+npm run version-assets -- 20260927-1
+```
+
+Replace the example value with the new release version. The public reader URL
+remains `https://tanagrit3042.github.io/cpf-complaint-flipbook/new.html`.
+
 The original reader in `index.html` still uses every image in `pages/`, while
 `new.html` uses `new-pages/`. On a phone held upright, the new reader places a
-white **Click to read fullscreen** prompt over the slide. Tapping it requests
-fullscreen and landscape orientation where the browser supports it.
+compact **อ่านแนวนอน** prompt over a blurred slide. Tapping it requests
+landscape reading, with a CSS rotation fallback for LINE's in-app browser.
