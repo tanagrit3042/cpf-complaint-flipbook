@@ -16,8 +16,10 @@ const currentPage = document.querySelector("#current-page");
 const pageGrid = document.querySelector("#page-grid");
 const pageDialog = document.querySelector("#page-dialog");
 const fullscreenButton = document.querySelector("#fullscreen-button");
+const landscapePrompt = document.querySelector("#landscape-prompt");
 const landscapeButton = document.querySelector("#landscape-button");
-const landscapeHelp = document.querySelector("#landscape-help");
+const landscapeDismiss = document.querySelector("#landscape-dismiss");
+const landscapeReopen = document.querySelector("#landscape-reopen");
 const controls = document.querySelector("#controls");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const landscapeMedia = window.matchMedia("(orientation: landscape)");
@@ -138,19 +140,25 @@ function updateFullscreenButton() {
   const isReadingLandscape = isFullscreen || virtualLandscape;
   fullscreenButton.setAttribute(
     "aria-label",
-    isReadingLandscape ? "ออกจากการอ่านแนวนอน" : "เปิดเต็มจอ",
+    isReadingLandscape ? "ย้อนกลับ" : "เปิดเต็มจอ",
   );
   fullscreenButton.querySelector(".fullscreen-label").textContent = isReadingLandscape
-    ? "ออกจากแนวนอน"
+    ? "ย้อนกลับ"
     : "เต็มจอ";
+}
+
+function showLandscapePrompt(visible) {
+  landscapePrompt.hidden = !visible;
+  shell.classList.toggle("is-awaiting-landscape", visible);
+  landscapeReopen.hidden = visible || virtualLandscape || landscapeMedia.matches;
 }
 
 function setVirtualLandscape(enabled) {
   virtualLandscape = enabled;
   reader.classList.toggle("is-virtual-landscape", enabled);
   document.documentElement.classList.toggle("has-virtual-landscape", enabled);
-  landscapeButton.hidden = enabled;
-  landscapeHelp.hidden = true;
+  showLandscapePrompt(false);
+  landscapeReopen.hidden = enabled || landscapeMedia.matches;
   updateFullscreenButton();
 }
 
@@ -178,15 +186,12 @@ async function enterLandscapeFullscreen() {
   }
   if (!orientationLocked && !landscapeMedia.matches) {
     setVirtualLandscape(true);
-  } else {
-    landscapeHelp.hidden = true;
   }
 }
 
 fullscreenButton.addEventListener("click", async () => {
   if (virtualLandscape) {
     setVirtualLandscape(false);
-    landscapeButton.hidden = false;
     if (document.fullscreenElement) {
       try {
         await document.exitFullscreen();
@@ -194,6 +199,11 @@ fullscreenButton.addEventListener("click", async () => {
         // The browser controls how native fullscreen is closed.
       }
     }
+    return;
+  }
+  if (!document.fullscreenElement && !landscapeMedia.matches) {
+    showLandscapePrompt(false);
+    void enterLandscapeFullscreen();
     return;
   }
   try {
@@ -206,17 +216,27 @@ fullscreenButton.addEventListener("click", async () => {
     // Fullscreen is unavailable on some mobile browsers.
   }
 });
-landscapeButton.addEventListener("click", () => {
-  landscapeButton.hidden = true;
+function requestLandscapeReading() {
+  showLandscapePrompt(false);
+  landscapeReopen.hidden = true;
   void enterLandscapeFullscreen();
-});
+}
+landscapeButton.addEventListener("click", requestLandscapeReading);
+landscapeReopen.addEventListener("click", requestLandscapeReading);
+landscapeDismiss.addEventListener("click", () => showLandscapePrompt(false));
 document.addEventListener("fullscreenchange", () => {
   updateFullscreenButton();
+  if (!document.fullscreenElement && !virtualLandscape && !landscapeMedia.matches) {
+    landscapeReopen.hidden = false;
+  }
 });
 landscapeMedia.addEventListener("change", (event) => {
   if (event.matches) {
     if (virtualLandscape) setVirtualLandscape(false);
-    landscapeHelp.hidden = true;
+    showLandscapePrompt(false);
+    landscapeReopen.hidden = true;
+  } else if (!virtualLandscape) {
+    landscapeReopen.hidden = false;
   }
 });
 document.addEventListener("keydown", (event) => {
@@ -242,6 +262,7 @@ const resizeObserver = new ResizeObserver(() => {
   resizeTimer = window.setTimeout(() => createFlipbook(pageIndex), 120);
 });
 
+if (landscapeMedia.matches) showLandscapePrompt(false);
 buildPagePicker();
 createFlipbook(pageIndex);
 resizeObserver.observe(shell);
