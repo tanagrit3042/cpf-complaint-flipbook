@@ -21,6 +21,7 @@ const landscapeHelp = document.querySelector("#landscape-help");
 const controls = document.querySelector("#controls");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const landscapeMedia = window.matchMedia("(orientation: landscape)");
+const isLineInAppBrowser = /\bLine\//i.test(navigator.userAgent) || /\bLIFF\b/i.test(navigator.userAgent);
 let virtualLandscape = false;
 
 function pageFromHash() {
@@ -154,6 +155,11 @@ function setVirtualLandscape(enabled) {
 }
 
 async function enterLandscapeFullscreen() {
+  if (isLineInAppBrowser && !landscapeMedia.matches) {
+    setVirtualLandscape(true);
+    return;
+  }
+
   let orientationLocked = false;
   try {
     if (!document.fullscreenElement && reader.requestFullscreen) {
