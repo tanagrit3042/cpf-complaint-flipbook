@@ -23,82 +23,17 @@
     0 24px 70px rgba(4, 62, 47, 0.22),
     0 2px 7px rgba(4, 62, 47, 0.11),
     0 1px 0 rgba(255, 255, 255, 0.9) inset;
-  perspective: 1500px;
   touch-action: pan-y;
 }
 
-.slide-image,
-.turning-sheet {
-  display: block;
+#new-book {
+  position: relative;
   width: 100%;
   height: 100%;
-  object-fit: contain;
 }
 
-.slide-image {
-  backface-visibility: hidden;
-}
-
-.slide-image.is-revealing.is-next {
-  animation: reveal-next 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.slide-image.is-revealing.is-prev {
-  animation: reveal-prev 640ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.turning-sheet {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  pointer-events: none;
-  backface-visibility: hidden;
-  box-shadow: 12px 0 28px rgba(4, 62, 47, 0.16);
-  will-change: transform, opacity;
-}
-
-.turning-sheet.is-next {
-  transform-origin: left center;
-  animation: turn-next 640ms cubic-bezier(0.25, 0.1, 0.2, 1) forwards;
-}
-
-.turning-sheet.is-prev {
-  transform-origin: right center;
-  animation: turn-prev 640ms cubic-bezier(0.25, 0.1, 0.2, 1) forwards;
-}
-
-@keyframes turn-next {
-  from { transform: rotateY(0); opacity: 1; }
-  55% { opacity: 0.98; }
-  to { transform: rotateY(-88deg); opacity: 0; }
-}
-
-@keyframes turn-prev {
-  from { transform: rotateY(0); opacity: 1; }
-  55% { opacity: 0.98; }
-  to { transform: rotateY(88deg); opacity: 0; }
-}
-
-@keyframes reveal-next {
-  from { transform: translateX(1.2%) scale(0.992); opacity: 0.72; }
-  to { transform: translateX(0) scale(1); opacity: 1; }
-}
-
-@keyframes reveal-prev {
-  from { transform: translateX(-1.2%) scale(0.992); opacity: 0.72; }
-  to { transform: translateX(0) scale(1); opacity: 1; }
-}
-
-.slide-corner {
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  bottom: 0;
-  width: 38px;
-  height: 38px;
-  background: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.8) 51%, #e0eade 88%);
-  opacity: 0.82;
-  pointer-events: none;
+#new-book canvas {
+  outline: none;
 }
 
 .reader-footnote {
@@ -163,11 +98,5 @@
 
   .page-dialog--wide .page-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .turning-sheet {
-    animation-duration: 0.01ms !important;
   }
 }

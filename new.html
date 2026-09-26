@@ -17,7 +17,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./styles.css?v=20260926-2" />
-    <link rel="stylesheet" href="./new.css?v=20260926-2" />
+    <link rel="stylesheet" href="./new.css?v=20260926-3" />
   </head>
   <body>
     <main class="reader reader--wide" id="reader" aria-label="เอกสารการจัดการข้อร้องเรียนอย่างง่าย ฉบับใหม่">
@@ -28,16 +28,11 @@
 
       <div class="slide-stage">
         <div class="slide-shell" id="slide-shell">
-          <img
-            id="slide-image"
-            class="slide-image"
-            src="./new-pages/page-01.jpg?v=20260926-1"
-            alt="หน้า 1 จาก 13 ของเอกสารการจัดการข้อร้องเรียนอย่างง่าย"
-            width="1600"
-            height="900"
-            fetchpriority="high"
-          />
-          <div class="slide-corner" aria-hidden="true"></div>
+          <div id="new-book" role="img" aria-label="เอกสารการจัดการข้อร้องเรียนอย่างง่าย 13 หน้า"></div>
+          <div class="loading" id="new-loading" role="status">
+            <span class="loading-spinner" aria-hidden="true"></span>
+            <span>กำลังเปิดเอกสาร…</span>
+          </div>
         </div>
       </div>
 
@@ -87,6 +82,7 @@
       </form>
     </dialog>
 
-    <script src="./new-reader.js?v=20260926-2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+    <script src="./new-pageflip.js?v=20260926-3"></script>
   </body>
 </html>
