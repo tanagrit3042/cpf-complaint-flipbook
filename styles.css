@@ -44,12 +44,51 @@ button {
 .reader {
   min-height: 100dvh;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) auto auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
   align-items: center;
   justify-items: center;
   gap: 10px;
   padding: max(14px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right))
     max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+}
+
+.book-tabs {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  border-radius: 999px;
+  background: rgba(248, 253, 249, 0.76);
+  box-shadow: 0 8px 28px rgba(25, 73, 53, 0.09);
+  backdrop-filter: blur(16px);
+}
+
+.book-tab {
+  min-height: 35px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 16px;
+  border-radius: 999px;
+  color: #245642;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.book-tab:hover,
+.book-tab:focus-visible {
+  background: rgba(7, 92, 67, 0.1);
+  color: #064d38;
+}
+
+.book-tab[aria-current="page"] {
+  background: #075c43;
+  color: #f6fff9;
+  box-shadow: 0 3px 10px rgba(4, 62, 47, 0.18);
 }
 
 .reader:fullscreen {
@@ -64,8 +103,8 @@ button {
 
 .book-stage {
   position: relative;
-  width: min(96vw, 1240px);
-  height: min(calc(100dvh - 126px), 877px, 67.9vw);
+  width: min(94vw, calc((100dvh - 200px) * 0.707), 620px);
+  height: min(calc(100dvh - 200px), 877px, 132.9vw);
   min-height: 260px;
   display: grid;
   place-items: center;
@@ -435,8 +474,8 @@ button {
   }
 
   .book-stage {
-    width: min(94vw, calc((100dvh - 122px) * 0.707));
-    height: min(calc(100dvh - 122px), 132.9vw);
+    width: min(94vw, calc((100dvh - 200px) * 0.707));
+    height: min(calc(100dvh - 200px), 132.9vw);
     border-radius: 22px;
   }
 

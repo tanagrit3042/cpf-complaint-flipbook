@@ -16,10 +16,14 @@
       href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260918-4" />
+    <link rel="stylesheet" href="./styles.css?v=20260926-1" />
   </head>
   <body>
     <main class="reader" aria-label="หนังสือออนไลน์">
+      <nav class="book-tabs" aria-label="เลือกเอกสาร">
+        <a class="book-tab" href="./" aria-current="page">คู่มือเดิม</a>
+        <a class="book-tab" href="./new.html">เอกสารใหม่ <span aria-hidden="true">↗</span></a>
+      </nav>
       <div class="book-stage" id="book-stage">
         <div id="book" aria-label="คู่มือการจัดการข้อร้องเรียน 13 หน้า"></div>
         <div class="loading" id="loading" role="status">
