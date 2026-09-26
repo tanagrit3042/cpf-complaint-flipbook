@@ -1,5 +1,5 @@
 const PAGE_COUNT = 13;
-const ASSET_VERSION = "20260918-3";
+const ASSET_VERSION = "20260926-4";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
   (_, index) =>
@@ -154,7 +154,20 @@ window.addEventListener("hashchange", () => {
   }
 });
 
+function buildBookPages() {
+  return PAGE_PATHS.map((path, index) => {
+    const page = document.createElement("div");
+    page.className = "book-page";
+    const image = document.createElement("img");
+    image.src = path;
+    image.alt = `คู่มือเดิม หน้า ${index + 1}`;
+    image.draggable = false;
+    page.append(image);
+    return page;
+  });
+}
+
 buildPagePicker();
-pageFlip.loadFromImages(PAGE_PATHS);
+pageFlip.loadFromHTML(buildBookPages());
 
 window.setTimeout(() => loadingElement.classList.add("is-hidden"), 5000);

@@ -1,5 +1,5 @@
 const PAGE_COUNT = 13;
-const PAGE_VERSION = "20260926-1";
+const PAGE_VERSION = "20260926-4";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
   (_, index) => `./new-pages/page-${String(index + 1).padStart(2, "0")}.jpg?v=${PAGE_VERSION}`,
@@ -16,6 +16,8 @@ const currentPage = document.querySelector("#current-page");
 const pageGrid = document.querySelector("#page-grid");
 const pageDialog = document.querySelector("#page-dialog");
 const fullscreenButton = document.querySelector("#fullscreen-button");
+const landscapeButton = document.querySelector("#landscape-button");
+const landscapeHelp = document.querySelector("#landscape-help");
 const controls = document.querySelector("#controls");
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -82,7 +84,17 @@ function createFlipbook(startPage) {
     updateControls(event.data.page);
   });
   pageFlip.on("flip", (event) => updateControls(event.data));
-  pageFlip.loadFromImages(PAGE_PATHS);
+  const pages = PAGE_PATHS.map((path, index) => {
+    const page = document.createElement("div");
+    page.className = "book-page book-page--wide";
+    const image = document.createElement("img");
+    image.src = path;
+    image.alt = `เอกสารใหม่ หน้า ${index + 1}`;
+    image.draggable = false;
+    page.append(image);
+    return page;
+  });
+  pageFlip.loadFromHTML(pages);
 }
 
 function buildPagePicker() {
@@ -118,23 +130,50 @@ pageDialog.addEventListener("click", (event) => {
   if (event.target === pageDialog) pageDialog.close();
 });
 
-fullscreenButton.addEventListener("click", async () => {
+async function enterLandscapeFullscreen() {
+  let orientationLocked = false;
   try {
-    if (document.fullscreenElement) {
-      await document.exitFullscreen();
-    } else {
+    if (!document.fullscreenElement && reader.requestFullscreen) {
       await reader.requestFullscreen();
     }
   } catch {
-    fullscreenButton.hidden = true;
+    // Fullscreen is unavailable on some mobile browsers.
+  }
+  if (screen.orientation?.lock) {
+    try {
+      await screen.orientation.lock("landscape");
+      orientationLocked = true;
+    } catch {
+      // Orientation locking requires fullscreen and browser support.
+    }
+  }
+  landscapeHelp.hidden = orientationLocked || window.matchMedia("(orientation: landscape)").matches;
+}
+
+fullscreenButton.addEventListener("click", async () => {
+  if (document.fullscreenElement) {
+    await document.exitFullscreen();
+  } else {
+    await enterLandscapeFullscreen();
   }
 });
+landscapeButton.addEventListener("click", enterLandscapeFullscreen);
 document.addEventListener("fullscreenchange", () => {
+  const isFullscreen = Boolean(document.fullscreenElement);
   fullscreenButton.setAttribute(
     "aria-label",
-    document.fullscreenElement ? "ออกจากเต็มจอ" : "เปิดเต็มจอ",
+    isFullscreen ? "ออกจากเต็มจอ" : "เปิดเต็มจอ",
   );
+  fullscreenButton.querySelector(".fullscreen-label").textContent = isFullscreen ? "ออกเต็มจอ" : "เต็มจอ";
 });
+window.matchMedia("(orientation: landscape)").addEventListener("change", (event) => {
+  if (event.matches) landscapeHelp.hidden = true;
+});
+if (window.matchMedia("(max-width: 760px) and (orientation: portrait)").matches && screen.orientation?.lock) {
+  screen.orientation.lock("landscape").catch(() => {
+    // Regular browser tabs require a user gesture; the button handles that case.
+  });
+}
 document.addEventListener("keydown", (event) => {
   if (pageDialog.open || !pageFlip) return;
   if (["ArrowRight", "PageDown", " "].includes(event.key)) {
