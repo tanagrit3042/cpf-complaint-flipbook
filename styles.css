@@ -10,7 +10,7 @@
   --forest-deep: #043e2f;
   --mint: #6fddb3;
   --cream: #fffaf0;
-  --background-image: url("./assets/background-landscape.png?v=20260926-11");
+  --background-image: url("./assets/background-landscape.png?v=20260930-1");
 }
 
 * {
@@ -97,7 +97,7 @@ button {
 
 @media (orientation: portrait) {
   :root {
-    --background-image: url("./assets/background-portrait.png?v=20260926-11");
+    --background-image: url("./assets/background-portrait.png?v=20260930-1");
   }
 }
 

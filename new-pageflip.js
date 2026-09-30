@@ -1,11 +1,12 @@
-const PAGE_COUNT = 13;
-const PAGE_VERSION = "20260926-11";
+const reader = document.querySelector("#reader");
+const PAGE_COUNT = Number(reader.dataset.pageCount || 13);
+const PAGE_DIRECTORY = reader.dataset.pagePath || "./new-pages";
+const PAGE_VERSION = "20260930-1";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
-  (_, index) => `./new-pages/page-${String(index + 1).padStart(2, "0")}.jpg?v=${PAGE_VERSION}`,
+  (_, index) => `${PAGE_DIRECTORY}/page-${String(index + 1).padStart(2, "0")}.jpg?v=${PAGE_VERSION}`,
 );
 
-const reader = document.querySelector("#reader");
 const shell = document.querySelector("#slide-shell");
 let book = document.querySelector("#new-book");
 const loading = document.querySelector("#new-loading");
@@ -13,6 +14,7 @@ const previousButton = document.querySelector("#prev-button");
 const nextButton = document.querySelector("#next-button");
 const pageStatus = document.querySelector("#page-status");
 const currentPage = document.querySelector("#current-page");
+const totalPages = document.querySelector("#total-pages");
 const pageGrid = document.querySelector("#page-grid");
 const pageDialog = document.querySelector("#page-dialog");
 const fullscreenButton = document.querySelector("#fullscreen-button");
@@ -36,6 +38,8 @@ let pageIndex = pageFromHash();
 let pageFlip = null;
 let bookSize = { width: 0, height: 0 };
 let resizeTimer = null;
+
+totalPages.textContent = String(PAGE_COUNT);
 
 function updateControls(index) {
   pageIndex = index;
@@ -64,7 +68,7 @@ function createFlipbook(startPage) {
     book = document.createElement("div");
     book.id = "new-book";
     book.setAttribute("role", "img");
-    book.setAttribute("aria-label", "เอกสารการจัดการข้อร้องเรียนอย่างง่าย 13 หน้า");
+    book.setAttribute("aria-label", `เอกสารการจัดการข้อร้องเรียนอย่างง่าย ${PAGE_COUNT} หน้า`);
     shell.prepend(book);
   }
   bookSize = { width, height };

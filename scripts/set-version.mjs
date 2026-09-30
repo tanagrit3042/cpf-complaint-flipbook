@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, readdir, writeFile } from "node:fs/promises";
 
 const nextVersion = process.argv[2];
 
@@ -7,9 +7,9 @@ if (!nextVersion || !/^[0-9A-Za-z._-]+$/.test(nextVersion)) {
   process.exit(1);
 }
 
+const htmlFiles = (await readdir(".")).filter((file) => file.endsWith(".html"));
 const replacements = [
-  ["index.html", /(\.(?:css|js)\?v=)[^"']+/g],
-  ["new.html", /(\.(?:css|js)\?v=)[^"']+/g],
+  ...htmlFiles.map((file) => [file, /(\.(?:css|js)\?v=)[^"']+/g]),
   ["styles.css", /(\.png\?v=)[^"')]+/g],
 ];
 
