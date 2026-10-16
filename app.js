@@ -1,5 +1,5 @@
 const PAGE_COUNT = 13;
-const ASSET_VERSION = "20260930-1";
+const ASSET_VERSION = "20261016-1";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
   (_, index) =>

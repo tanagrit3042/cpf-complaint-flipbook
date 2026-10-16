@@ -1,7 +1,7 @@
 const reader = document.querySelector("#reader");
 const PAGE_COUNT = Number(reader.dataset.pageCount || 13);
 const PAGE_DIRECTORY = reader.dataset.pagePath || "./new-pages";
-const PAGE_VERSION = "20260930-1";
+const PAGE_VERSION = "20261016-1";
 const PAGE_PATHS = Array.from(
   { length: PAGE_COUNT },
   (_, index) => `${PAGE_DIRECTORY}/page-${String(index + 1).padStart(2, "0")}.jpg?v=${PAGE_VERSION}`,
